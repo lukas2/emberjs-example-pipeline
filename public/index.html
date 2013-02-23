@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Pipeline App</title>
+
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet/less" type="text/css" href="css/app.less">
+
+    <script src="js/libs/less.js" type="text/javascript"></script>
+  </head>
+  <body>
+
+    <script type="text/x-handlebars" data-template-name="application">
+      {{ render "debug" }}
+      <div class="row">
+        <div class ="twelve columns">
+          <h1>Pipeline App</h1>
+          <p><a href="http://www.lukaszielinski.de/blog">&copy; 2013 Lukas Zielinski</a></p>
+          <hr>
+          {{ outlet }}
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="debug">
+     <div class="row">
+        <div>
+          DEBUG: 
+          {{#each stage in controller}}
+            <span>
+              {{ stage.title }} : 
+              {{#each item in stage.items}}
+                {{item.id}}
+              {{/each}}
+            </span>
+          {{/each}}
+        </div>  
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="index">
+      <div class="row">
+        <div class ="four columns" id="items">
+           {{ render "itemsAside" }}
+         </div>
+        <div class ="eight columns" id="stages">
+          <div class="row">
+            <div class ="twelve columns" id="stagegrid">
+              {{ render "stages" }}
+            </div>
+          </div>
+         </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="items/new">
+      <p>Create a new Item</p>
+      {{ partial newItemForm }}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_newItemForm">
+      <form class="itemform">
+        {{view Ember.TextField valueBinding='content.title' name='title' viewName='titleField' placeholder='Enter a title'}}
+        {{view Ember.TextArea valueBinding='content.desc' name='desc' viewName='descField' placeholder='Enter a description'}}
+        <a href="#" {{ action save model }} class="small button">Add Item</button>
+      </form>      
+      <a href="#" {{ action cancel model }}>Go Back</a>
+    </script>
+
+
+    <script type="text/x-handlebars" data-template-name="itemsAside">
+      <div class="items-header">
+        <h3>Items</h3>
+        {{#linkTo "items.new" }}+ Add new Item{{/linkTo}}
+      </div>
+      {{ partial "itemList" }}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="stages">
+      {{ partial "stageList" }}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_stageList">
+      {{#each stage in controller }}
+        {{#view App.StageColumnView contentBinding="stage"}}
+          <div class="two columns stagecolumn">
+              <div class="stagecolumnheader">
+                <div>
+                  {{ stage.title }}
+                </div>
+              </div>
+              <ul class="stagecolumnbody">
+                {{#each item in stage.items }}
+                  {{#view App.DraggableView contentBinding="item"}}
+                    <li class="staged-item">
+                      <div class="cancel">
+                        <a href="#" {{action "removeItemFromStage" item }}>X</a>
+                      </div>
+                      <div class="title">
+                        {{ item.title }}
+                      </div>
+                    </li>
+                  {{/view}}
+                {{/each}}
+              </ul>
+          </div>
+        {{/view}}
+      {{/each}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="_itemList">
+      <ul class="one-up mobile">
+      {{#each item in controller.unassigned}}
+        {{#view App.DraggableView contentBinding="item"}}
+          <li class="itemli">
+            <div class="itemdeletebutton">
+              <a href="#" {{ action "delete" item }}>X</a>
+            </div>
+
+            <div class="itemtitle">
+              {{ item.title }}
+            </div>
+
+            <div class="itemdesc">
+              {{ item.desc }}
+            </div>
+          </li>
+        {{/view}}
+      {{/each}}
+      </ul>
+    </script>
+
+    <script src="js/libs/jquery-1.9.0.js"></script>
+    <script src="js/libs/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="js/libs/handlebars-1.0.0.rc.2.js"></script>
+    <script src="js/libs/ember.js"></script>
+    <script src="js/libs/ember-data.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

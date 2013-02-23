@@ -1,0 +1,49 @@
+.itemli {
+  background: #DDD;
+  text-align: center;
+  margin: 7px;
+  border: 1px solid #444;
+  list-style-type: none;
+  font-size: 1.1em;
+  width: 200px;
+  -webkit-box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.53);
+  -moz-box-shadow:    2px 2px 5px rgba(50, 50, 50, 0.53);
+  box-shadow:         2px 2px 5px rgba(50, 50, 50, 0.53);
+}
+
+.stageli {
+  float: left;
+  background: #DDD;
+  text-align: center;
+  border: 1px solid #444;
+  margin: 0;
+  list-style-type: none;
+  font-size: 0.8em;
+  width: 134px;
+  -webkit-box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.53);
+  -moz-box-shadow:    2px 2px 5px rgba(50, 50, 50, 0.53);
+  box-shadow:         2px 2px 5px rgba(50, 50, 50, 0.53);
+}
+
+.stagetitle {
+  background: #EEE;
+}
+
+.itemid {
+  float: left;
+  width: 30px;
+  border-right: 1px solid #222;
+  background: #DDF;
+  font-weight: bold;
+}
+
+.itemtitle {
+  font-weight: bold;
+  border-bottom: 1px solid #222;
+  background: #EEE;
+}
+
+.itemdesc {
+  margin-left: 30px;
+  font-size: 0.8em;
+}
